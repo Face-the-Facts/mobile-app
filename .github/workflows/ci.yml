@@ -2,8 +2,11 @@ name: CI
 
 on:
     pull_request:
+        branches: [develop]
+    push:
+        branches: [develop]
     schedule:
-        # run once a day
+        # run once a day at 00:00 UTC
         - cron: "0 0 * * *"
 
 env:
