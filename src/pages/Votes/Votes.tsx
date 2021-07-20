@@ -5,7 +5,7 @@ import LinkButton from '../../components/LinkButton';
 import { iconEnum } from '../../enums/icon.enum';
 import { useParams } from 'react-router';
 import { useQueries } from 'react-query';
-import fetch from '../../functions/queries';
+import { newfetch } from '../../functions/queries';
 import VoteCard from '../../components/VoteCard/VoteCard';
 
 const Votes: React.FC = () => {
@@ -14,9 +14,9 @@ const Votes: React.FC = () => {
 	const polls = useQueries(
 		pollIds.map((pollId) => {
 			return {
-				queryKey: ['poll', pollId],
+				queryKey: ['new-poll', pollId],
 				// eslint-disable-next-line
-				queryFn: () => fetch(`polls/${pollId}`),
+				queryFn: () => newfetch(`polls/${pollId}`),
 				staleTime: 60 * 1440000,
 				cacheTime: 60 * 1440000, // 1 day
 			};
@@ -32,12 +32,12 @@ const Votes: React.FC = () => {
 					{
 						// eslint-disable-next-line
 						polls.map((poll: any, index: number): JSX.Element | undefined => {
-							if (poll.data?.data !== undefined) {
+							if (poll.status === 'success') {
 								return (
 									<div className="votes-vote-card" key={`poll-${index}`}>
 										<VoteCard
-											vote={poll.data?.data}
-											name={poll.data?.label}
+											vote={poll.data}
+											name={poll.label}
 											setArrow={(): null => null}
 										/>
 									</div>

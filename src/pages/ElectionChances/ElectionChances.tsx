@@ -107,7 +107,7 @@ const Electionchances: React.FC = () => {
 									Über diese Liste kamen 2017
 								</IonCardSubtitle>
 								<IonCardTitle className="result-total">
-									20 Kandidat:innen in den Bundestag.
+									{status === 'success' ? data.results : null} Kandidat:innen in den Bundestag.
 								</IonCardTitle>
 							</div>
 							<div className="secondVote-info-text">
@@ -116,10 +116,8 @@ const Electionchances: React.FC = () => {
 								</IonCardSubtitle>
 								<IonCardTitle className="statelist-title">
 									<span className={stateListClass + ' constituencycard'}>
-										{status === 'success' ? data.party.label : null}{' '}
-										{constituencyCardHandler(
-											data?.electoral_data.electoral_list.label
-										)}
+										{status === 'success' ? data.party.label : null}
+										{status === 'success' ? data?.electoral_data.electoral_list.label : null}
 									</span>
 								</IonCardTitle>
 							</div>
